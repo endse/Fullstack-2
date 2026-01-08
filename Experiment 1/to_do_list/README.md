@@ -29,4 +29,4 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 # Screenshots
-![image](Screenshot 2026-01-08 150946.png)
+![image](to_do_list\screenshot.png)
