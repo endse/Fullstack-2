@@ -72,16 +72,24 @@ Follow these steps to set up and run the project locally:
 1. **Clone the repository:**
 
 ```bash
-git clone <your-repo-url>
-cd <project-folder>
+git clone <https://github.com/endse/Fullstack-2.git>
+cd <Fullstack-2>
+
+```
+2. **Install dependencies**
+```
 npm install
 # or
 yarn install
+```
+3. **Run the Next app**
+```
 npm run dev
 # or
 yarn dev
 ```
-2. **Open the application in your browser:**
+
+4. **Open the application in your browser:**
 
 Go to http://localhost:3000
  to view the project running locally.
