@@ -60,7 +60,19 @@ A **basic to-do list application** demonstrating:
 
 ---
 
-### 5. `node_modules`
+### 5. `basic_form`
+A **basic form application** demonstrating:
+
+- Creating controlled form inputs using `useState`  
+- Handling form submission events  
+- Validating user input before submission  
+- Managing multiple form fields within a single component  
+
+**Learning Outcome:** Understand form handling, controlled components, and user input validation in React.
+
+---
+
+### 6. `node_modules`
 Contains all installed dependencies for the project. **Do not modify manually.**
 
 ---
