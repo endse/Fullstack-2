@@ -27,7 +27,7 @@ Contains a simple **counter component** demonstrating:
 
 ---
 
-### 2. `animations`
+### 2. `[animations](Experiment 1/form_app)`
 Demonstrates **animations and transitions** using **Framer Motion**:
 
 - Animated headings, buttons, and blocks  
