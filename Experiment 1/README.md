@@ -27,12 +27,12 @@ Contains a simple **counter component** demonstrating:
 
 ---
 
-### 2. `[animations](Experiment 1/form_app)`
+### 2. `animations`
 Demonstrates **animations and transitions** using **Framer Motion**:
 
 - Animated headings, buttons, and blocks  
 - Smooth page and component transitions  
-- Hover and tap effects for interactive elements
+- Hover and tap effects for interactive elements [Learn more](https://github.com/endse/Fullstack-2/tree/8ffb1b4e33d8c20965aa4b7adce853bc65c5f747/Experiment%201/animations)
 
 **Learning Outcome:** Learn how to implement fluid animations and enhance UI/UX in React/Next.js.
 
