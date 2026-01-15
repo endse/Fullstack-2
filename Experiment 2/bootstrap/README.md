@@ -4,7 +4,7 @@
 ![output](Screenshot.png)
 ## Aim
 
-To design a responsive user interface using a component library (**Bootstrap**) in a **Single Page Application (SPA)** using React.
+To design a responsive user interface using a component library (**Bootstrap**) in a  using React.
 
 ---
 
