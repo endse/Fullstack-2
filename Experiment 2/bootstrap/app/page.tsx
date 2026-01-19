@@ -1,133 +1,121 @@
+'use client';
+
+import { useEffect } from 'react';
+
 export default function Home() {
+  // Load Bootstrap JS safely
+  useEffect(() => {
+    require('bootstrap/dist/js/bootstrap.bundle.min.js');
+  }, []);
+
   return (
     <>
-      {/* Navigation Bar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      {/* NAVBAR */}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container">
-          <span className="navbar-brand fw-semibold">
-            Experiment–2 | Bootstrap UI
-          </span>
+          <a className="navbar-brand fw-bold" href="#">
+            ShopEase
+          </a>
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto align-items-lg-center">
+              <li className="nav-item">
+                <a className="nav-link active" href="#">
+                  Home
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#products">
+                  Products
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#offers">
+                  Offers
+                </a>
+              </li>
+              <li className="nav-item ms-lg-3">
+                <button className="btn btn-outline-light btn-sm">
+                  Cart
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main className="container py-5">
-        {/* Title Section */}
-        <header className="mb-5 text-center">
-          <h1 className="fw-bold">
-            Designing UI Using Bootstrap Components
-          </h1>
-          <p className="text-muted mt-2">
-            Implementation using React and Next.js Single Page Application
+      {/* HERO SECTION */}
+      <section className="bg-light text-center py-5" style={{ marginTop: '70px' }}>
+        <div className="container">
+          <h1 className="fw-bold">Smart Shopping Starts Here</h1>
+          <p className="text-muted mt-3">
+            Discover premium electronics at unbeatable prices
           </p>
-          <hr className="mt-4" />
-        </header>
-
-        {/* Buttons Section */}
-        <section className="mb-5">
-          <h4 className="mb-3">1. Button Components</h4>
-          <p className="text-muted">
-            Bootstrap provides predefined button styles to maintain visual
-            consistency and accessibility.
-          </p>
-          <div>
-            <button className="btn btn-primary me-2">Primary</button>
-            <button className="btn btn-secondary me-2">Secondary</button>
-            <button className="btn btn-success me-2">Success</button>
-            <button className="btn btn-danger">Danger</button>
-          </div>
-        </section>
-
-        {/* Card Section */}
-        <section className="mb-5">
-          <h4 className="mb-3">2. Card Components</h4>
-          <p className="text-muted">
-            Cards are flexible content containers used to display structured
-            information.
-          </p>
-
-          <div className="row g-4">
-            <div className="col-md-4">
-              <div className="card h-100 shadow-sm">
-                <div className="card-body">
-                  <h5 className="card-title">Responsive Layout</h5>
-                  <p className="card-text">
-                    Bootstrap’s grid system ensures compatibility across
-                    different screen sizes.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card h-100 shadow-sm">
-                <div className="card-body">
-                  <h5 className="card-title">Reusable Components</h5>
-                  <p className="card-text">
-                    Pre-built components reduce development effort and improve
-                    UI consistency.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card h-100 shadow-sm">
-                <div className="card-body">
-                  <h5 className="card-title">Modern UI Design</h5>
-                  <p className="card-text">
-                    Bootstrap follows modern design principles for professional
-                    web applications.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Form Section */}
-        <section className="mb-5">
-          <h4 className="mb-3">3. Form Components</h4>
-          <p className="text-muted">
-            Forms allow structured user input with built-in styling and
-            validation support.
-          </p>
-
-          <form className="col-md-6">
-            <div className="mb-3">
-              <label className="form-label fw-semibold">
-                Full Name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter your full name"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label fw-semibold">
-                Email Address
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter your email"
-              />
-            </div>
-
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </form>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-light py-3 border-top">
-        <div className="container text-center text-muted">
-          © 2026 | Experiment-2 | Bootstrap UI using Next.js
+          <a href="#products" className="btn btn-primary mt-3">
+            Shop Now
+          </a>
         </div>
+      </section>
+
+      {/* PRODUCTS */}
+      <section id="products" className="container py-5">
+        <h2 className="fw-bold text-center mb-4">
+          Featured Products
+        </h2>
+
+        <div className="row g-4">
+          {[
+            { name: 'Smartphone', price: '₹24,999' },
+            { name: 'Laptop', price: '₹59,999' },
+            { name: 'Headphones', price: '₹3,999' },
+            { name: 'Smart Watch', price: '₹6,499' },
+          ].map((product, index) => (
+            <div className="col-md-3" key={index}>
+              <div className="card h-100 shadow-sm">
+                <div
+                  className="bg-secondary"
+                  style={{ height: '140px' }}
+                ></div>
+                <div className="card-body text-center">
+                  <h5 className="card-title">{product.name}</h5>
+                  <p className="fw-semibold">{product.price}</p>
+                  <button className="btn btn-outline-primary btn-sm">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* OFFERS */}
+      <section id="offers" className="bg-dark text-white py-5">
+        <div className="container text-center">
+          <h2 className="fw-bold">Limited Time Offers</h2>
+          <p className="mt-2">
+            Flat 40% off on selected electronics
+          </p>
+          <button className="btn btn-light mt-3">
+            View Deals
+          </button>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-light py-3 text-center">
+        <p className="mb-0 text-muted">
+          © 2026 ShopEase | Experiment–4
+        </p>
       </footer>
     </>
   );

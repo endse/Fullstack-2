@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const metadata = {
-  title: 'Experiment 1 - Bootstrap UI',
-  description: 'Designing UI using Bootstrap components in Next.js',
+  title: 'ShopEase | E-Commerce',
+  description: 'Sample e-commerce website using Next.js and Bootstrap',
 };
 
 export default function RootLayout({
