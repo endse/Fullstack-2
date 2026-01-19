@@ -1,4 +1,4 @@
-# Experiment–4: Responsive Navigation Bar Using Component Library
+# Experiment–2: Responsive Navigation Bar Using Component Library
 
 ## Outputs
 
@@ -517,7 +517,7 @@ By completing this experiment, you have learned to:
 
 ## Experiment Number
 
-**Experiment–4**
+**Experiment–2**
 
 ---
 
