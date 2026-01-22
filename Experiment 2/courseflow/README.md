@@ -4,10 +4,10 @@ CourseFlow is a modern, responsive, and interactive student course management po
 
 ## Outputs
 
-![image_1](screenshot1.png)
-![image_2](screenshot2.png)
-![image_3](screenshot3.png)
-![image_4](screenshot4.png)
+![image_1](Screenshot1.png)
+![image_2](Screenshot2.png)
+![image_3](Screenshot3.png)
+![image_4](Screenshot4.png)
 
 
 ## 🚀 Features
