@@ -2,6 +2,14 @@
 
 CourseFlow is a modern, responsive, and interactive student course management portal built with React and TypeScript. It features a comprehensive course catalog, a detailed dashboard for progress tracking, a dedicated learning interface (Course Player), and an AI-powered academic advisor integrated via the Google Gemini API.
 
+## Outputs
+
+![image_1](screenshot1.png)
+![image_2](screenshot2.png)
+![image_3](screenshot3.png)
+![image_4](screenshot4.png)
+
+
 ## 🚀 Features
 
 ### 1. **Course Catalog & Discovery**
