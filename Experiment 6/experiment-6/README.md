@@ -45,7 +45,7 @@ Validation performed in the browser allows for immediate feedback to the user, r
 ### 5.1 Validation Rules
 - **Username/Alias**: Minimum 3 characters.
 - **Names**: Minimum 2 characters.
-- **Email**: Standard RFC 5322 regex validation.
+- **Email**: Strict validation blocking non-standard special characters; whitelists verified domains (com, edu, ac.in, etc.).
 - **Date of Birth**: Restricted to $\leq$ Current Date; calculated age must be $\geq$ 18.
 - **Password**: 4-point complexity scoring system (Casing, Numbers, Symbols, Length).
 

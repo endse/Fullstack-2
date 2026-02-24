@@ -47,7 +47,7 @@ export default function ControlledForm() {
       }
     } else if (currentStep === 2) {
       if (formData.username.length < 3) newErrors.username = 'Username too short';
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email';
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|in|ac\.in|co\.in)$/.test(formData.email)) newErrors.email = 'Enter verified email (e.g. .com, .edu, .in)';
       if (passwordStrength < 2) newErrors.password = 'Security too weak';
     } else if (currentStep === 3) {
       if (formData.message.trim().length < 5) newErrors.message = 'Write a longer message';
