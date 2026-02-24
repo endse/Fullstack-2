@@ -45,22 +45,17 @@ Validation performed in the browser allows for immediate feedback to the user, r
 ### 5.1 Validation Rules
 - **Username/Alias**: Minimum 3 characters.
 - **Names**: Minimum 2 characters.
-- **Email**: Strict validation blocking non-standard special characters; whitelists verified domains (com, edu, ac.in, etc.).
-- **Date of Birth**: Restricted to $\leq$ Current Date; calculated age must be $\geq$ 18.
-- **Password**: 4-point complexity scoring system (Casing, Numbers, Symbols, Length).
+- **Email**: Hyper-strict validation blocking dots in the local part and whitelists verified domains (e.g., .cuchd, .com, .edu).
+- **International Names**: Supports Unicode letters, hyphens, and apostrophes; capped at 50 characters for UI stability.
+- **Leap Year Logic**: Mathematical validation for February 29th (prevents invalid dates in non-leap years).
+- **Security Exclusion**: Passwords are automatically rejected if they contain the user's **Username**, **Email**, or **DoB components** (Year/Month/Day).
+- **Accessibility**: Full ARIA support (`aria-invalid`, `aria-busy`, `role="main"`) for screen readers.
 
-### 5.2 Key Code Architecture
-```javascript
-// Universal Change Handler with Future-Date Guard
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  if (name === 'dob' && new Date(value) > new Date()) {
-    alert('Date of birth cannot be in the future!');
-    return;
-  }
-  setFormData(prev => ({ ...prev, [name]: value }));
-};
-```
+### 5.2 Technical Stack (Enterprise Grade)
+- **Language**: TypeScript (Full type safety for state and validation).
+- **Architecture**: Separated Logic (`lib/validation.ts`) from UI (`ControlledForm.tsx`).
+- **State Management**: React `useState` + `useCallback` + `useMemo` for high-performance rendering.
+- **Animations**: Hardware-accelerated Framer Motion transitions.
 
 ## 6. System Architecture & UI Flow
 The following Mermaid diagrams illustrate the component hierarchy and the logical state flow of the multi-step application.
