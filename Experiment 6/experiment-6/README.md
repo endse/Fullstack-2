@@ -134,6 +134,7 @@ Controlled components remain the gold standard for form handling in React due to
 
 ---
 **Author:** Chirag Yadav
+
 **Date:** 24th February 2026
 
 License: MIT
