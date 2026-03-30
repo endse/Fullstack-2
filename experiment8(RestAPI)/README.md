@@ -1,54 +1,196 @@
 # Laboratory Report: Experiment 8  
 **Course:** Fullstack Development - II  
-**Topic:** Designing RESTful APIs Using Spring Boot  
+**Topic:** Production-Grade REST API using Spring Boot (Layered Architecture)  
 **Date:** March 2026  
 
 ---
 
 ## 1. Aim
-To design and implement a **RESTful API** using Spring Boot that performs CRUD operations and is tested using Postman.
+To design and implement a **scalable, production-grade REST API** using Spring Boot following a **multi-layer architecture (Controller → Service → Repository)** with proper **validation and exception handling**.
 
 ---
 
-## 2. Actual Code Context (Aligned)
+## 2. Architecture Overview
 
-The API is based on a simple controller:
+```mermaid
+graph TD
+    A[Client - Postman] --> B[Controller Layer]
+    B --> C[Service Layer]
+    C --> D[Repository Layer]
+    D --> E[MySQL Database]
+    E --> D
+    D --> C
+    C --> B
+    B --> A
+```
+
+---
+
+## 3. Request Flow
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Controller
+    participant Service
+    participant Repository
+    participant DB
+
+    Client->>Controller: HTTP Request
+    Controller->>Service: Validate + Process
+    Service->>Repository: DB Operation
+    Repository->>DB: Query
+    DB-->>Repository: Result
+    Repository-->>Service: Data
+    Service-->>Controller: Response DTO
+    Controller-->>Client: JSON Response
+```
+
+---
+
+## 4. Layered Implementation
+
+### 4.1 Controller Layer
+Handles HTTP requests and responses.
 
 ```java
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
-    public String getUsers() {
-        return "List of users";
+    public List<User> getUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public String getUserById(@PathVariable int id) {
-        return "User ID: " + id;
+    public User getUser(@PathVariable int id) {
+        return userService.getUserById(id);
     }
 
     @PostMapping
-    public String createUser() {
-        return "User created";
+    public User createUser(@RequestBody @Valid User user) {
+        return userService.createUser(user);
     }
 
     @PutMapping("/{id}")
-    public String updateUser(@PathVariable int id) {
-        return "User updated: " + id;
+    public User updateUser(@PathVariable int id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable int id) {
-        return "User deleted: " + id;
+        userService.deleteUser(id);
+        return "User deleted successfully";
     }
 }
 ```
 
 ---
 
-## 3. API Endpoints
+### 4.2 Service Layer
+Contains business logic.
+
+```java
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository repo;
+
+    public List<User> getAllUsers() {
+        return repo.findAll();
+    }
+
+    public User getUserById(int id) {
+        return repo.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public User createUser(User user) {
+        return repo.save(user);
+    }
+
+    public User updateUser(int id, User user) {
+        User existing = getUserById(id);
+        existing.setName(user.getName());
+        existing.setEmail(user.getEmail());
+        return repo.save(existing);
+    }
+
+    public void deleteUser(int id) {
+        repo.deleteById(id);
+    }
+}
+```
+
+---
+
+### 4.3 Repository Layer
+
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
+}
+```
+
+---
+
+### 4.4 Entity Class with Validation
+
+```java
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotBlank(message = "Name cannot be empty")
+    private String name;
+
+    @Email(message = "Invalid email format")
+    private String email;
+
+    // getters and setters
+}
+```
+
+---
+
+## 5. Exception Handling
+
+### Global Exception Handler
+
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleException(RuntimeException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationErrors(
+            MethodArgumentNotValidException ex) {
+
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage())
+        );
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+}
+```
+
+---
+
+## 6. API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|------------|
@@ -60,102 +202,55 @@ public class UserController {
 
 ---
 
-## 4. System Architecture
+## 7. Sample JSON
 
-```mermaid
-graph TD
-    A[Client - Postman] --> B[UserController]
-    B --> C[Spring Boot Framework]
-    C --> D[Response to Client]
+```json
+{
+  "name": "Chirag",
+  "email": "chirag@example.com"
+}
 ```
 
 ---
 
-## 5. Request Flow
+## 8. Screenshots & Description
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Controller
+### Controller Implementation
+![Controller](./ss/2_eclipse_code.png)  
+Shows REST endpoint mappings and dependency injection.
 
-    Client->>Controller: GET /api/users
-    Controller-->>Client: "List of users"
+### Server Startup
+![Server](./ss/3_eclipse_output.png)  
+Displays successful Spring Boot initialization.
 
-    Client->>Controller: GET /api/users/1
-    Controller-->>Client: "User ID: 1"
+### POST Request
+![POST](./ss/4_post_postman.png)  
+Creates new user using JSON payload.
 
-    Client->>Controller: POST /api/users
-    Controller-->>Client: "User created"
+### GET Request
+![GET](./ss/5_getpost_psotman.png)  
+Fetches stored users.
 
-    Client->>Controller: PUT /api/users/1
-    Controller-->>Client: "User updated: 1"
+### PUT Request
+![PUT](./ss/put.png)  
+Updates existing user.
 
-    Client->>Controller: DELETE /api/users/1
-    Controller-->>Client: "User deleted: 1"
-```
-
----
-
-## 6. Implementation Flow with Screenshots
-
-### 6.1 Controller Code
-![Controller](./ss/2_eclipse_code.png)
-
-**Description:**  
-Defines REST endpoints using Spring Boot annotations.
-
----
-
-### 6.2 Server Execution
-![Server](./ss/3_eclipse_output.png)
-
-**Description:**  
-Spring Boot application running on port 8080.
-
----
-
-### 6.3 POST Request
-![POST](./ss/4_post_postman.png)
-
-**Description:**  
-Creates a new user.
-
----
-
-### 6.4 GET Request
-![GET](./ss/5_getpost_psotman.png)
-
-**Description:**  
-Fetches user data.
-
----
-
-### 6.5 PUT Request
-![PUT](./ss/put.png)
-
-**Description:**  
-Updates user information.
-
----
-
-### 6.6 DELETE Request
-![DELETE](./ss/delete.png)
-
-**Description:**  
+### DELETE Request
+![DELETE](./ss/delete.png)  
 Deletes user record.
 
 ---
 
-## 7. Key Learnings
-- REST API design using Spring Boot  
-- Mapping HTTP methods to endpoints  
-- Using annotations for clean backend code  
-- Testing APIs using Postman  
+## 9. Key Learnings
+- Layered architecture improves scalability  
+- Service layer separates business logic  
+- Validation ensures data integrity  
+- Global exception handling improves API reliability  
 
 ---
 
-## 8. Conclusion
-This implementation demonstrates a basic but complete REST API using Spring Boot. The controller handles all CRUD operations effectively and follows REST principles.
+## 10. Conclusion
+This implementation upgrades a basic REST API into a **production-ready backend system** using Spring Boot best practices. The inclusion of layered architecture, validation, and exception handling aligns with real-world enterprise application design.
 
 ---
 
